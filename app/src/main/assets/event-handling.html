@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Handling</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        label {
+            font-size: 16px;
+        }
+
+        .searchInput {
+            width: 250px;
+            height: 30px;
+            margin: 24px;
+            font-size: 16px;
+        }
+    
+        .gameCover {
+            width: 180px;
+            height: 240px;
+            border-radius: 1.2rem;
+            margin: 24px;
+            background-color: #FA0;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+    <input class="searchInput" type="text" value="" placeholder="Search for a game.">
+
+    <input type="checkbox" id="androidAudioDecoder" name="androidAudioDecoder" value="1">
+    <label for="androidAudioDecoder">Use Android's built-in audio decoder</label>
+
+    <div class="gameCover" id="gameCover2" title="Start a game" data-value="gameID">Quick Start Game</div>
+
+
+    <script>
+
+        // event handling within the webview
+        // can we listen to those events thrown in the web view from within the application / parent "container"
+
+        const gameCover = document.querySelector('.gameCover');
+        console.log('Game Cover', gameCover);
+
+        gameCover.addEventListener('click', event => {
+            var scanResult = Android1.jsCallback1();
+            console.log(event.target);
+            console.log(event.target.getAttribute('data-value'));
+<!--            alert("result is fetched from android")-->
+            document.getElementById("gameCover2").innerHTML = scanResult;
+        });
+
+        const androidAudioDecoder = document.querySelector('#androidAudioDecoder');
+        console.log('Search term', androidAudioDecoder);
+
+        androidAudioDecoder.addEventListener('click', event => {
+            console.log(event.target.value)
+        });
+
+        const searchInput = document.querySelector('.searchInput');
+        console.log('Search term', searchInput);
+
+        searchInput.addEventListener('click', event => {
+            console.log(event.target.value)
+            Android.jsCallback('{ "fake" : "fake-value", "array" : [0,1,2] }');
+
+        });
+
+
+        // ALTERNATIV: send a request via https to an API to trigger gamestart for example 
+        // or save certain settings directly on a per client basis
+
+        // async requests from the webview would go here ... do we have an API in place for that?
+
+
+
+    </script>
+    
+</body>
+</html>
